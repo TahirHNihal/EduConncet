@@ -43,7 +43,10 @@ const HomePage = async () => {
             way.”
           </p>
           <div className="flex items-center gap-3 flex-wrap justify-center">
-            <Link href={`/courses`} className={cn(buttonVariants({ size: "lg" }))}>
+            <Link
+              href={`/courses`}
+              className={cn(buttonVariants({ size: "lg" }))}
+            >
               Explore Now
             </Link>
             <Link
@@ -55,6 +58,7 @@ const HomePage = async () => {
           </div>
         </div>
       </section>
+
       {/* Categories Section */}
       <section
         id="categories"
@@ -62,10 +66,9 @@ const HomePage = async () => {
       >
         <div className="flex items-center justify-between">
           <SectionTitle>Categories</SectionTitle>
-
           <Link
-            href={""}
-            className=" text-sm font-medium  hover:opacity-80 flex items-center gap-1"
+            href=""
+            className="text-sm font-medium hover:opacity-80 flex items-center gap-1"
           >
             Browse All <ArrowRightIcon className="h-4 w-4" />
           </Link>
@@ -78,14 +81,14 @@ const HomePage = async () => {
                 key={category.id}
                 className="relative overflow-hidden rounded-lg border bg-background p-2 hover:scale-105 transition-all duration-500 ease-in-out"
               >
-                <div className="flex  flex-col gap-4 items-center justify-between rounded-md p-6">
+                <div className="flex flex-col gap-4 items-center justify-between rounded-md p-6">
                   <Image
                     src={`/assets/images/categories/${category.thumbnail}`}
                     alt={category.title}
                     width={100}
                     height={100}
                   />
-                  <h3 className="font-bold">{category.title}</h3>
+                  <h3 className="font-bold">{category?.title}</h3>
                 </div>
               </Link>
             );
@@ -94,12 +97,12 @@ const HomePage = async () => {
       </section>
 
       {/* Courses */}
-      <section id="courses" className="container space-y-6   md:py-12 lg:py-24">
+      <section id="courses" className="container space-y-6 md:py-12 lg:py-24">
         <div className="flex items-center justify-between">
           <SectionTitle>Courses</SectionTitle>
           <Link
             href={`/courses`}
-            className=" text-sm font-medium  hover:opacity-80 flex items-center gap-1"
+            className="text-sm font-medium hover:opacity-80 flex items-center gap-1"
           >
             Browse All <ArrowRightIcon className="h-4 w-4" />
           </Link>
@@ -111,37 +114,44 @@ const HomePage = async () => {
                 <div className="group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full">
                   <div className="relative w-full aspect-video rounded-md overflow-hidden">
                     <Image
-                      src={`/assets/images/courses/${course?.thumbnail}`}
-                      alt={"course"}
+                      src={`/assets/images/courses/${course.thumbnail}`}
+                      alt={
+                        typeof course.title === "string"
+                          ? course.title
+                          : "Course"
+                      }
                       className="object-cover"
                       fill
                     />
                   </div>
                   <div className="flex flex-col pt-2">
                     <div className="text-lg md:text-base font-medium group-hover:text-sky-700 line-clamp-2">
-                      {course?.title}
+                      {typeof course.title === "string"
+                        ? course.title
+                        : "Untitled Course"}
                     </div>
-                    <p className="text-xs text-muted-foreground">{course?.category}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {typeof course.category === "string" && course.category}
+                    </p>
                     <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
                       <div className="flex items-center gap-x-1 text-slate-500">
-                        <div>
-                          <BookOpen className="w-4" />
-                        </div>
-                        <span>{course?.modules?.length}</span>
+                        <BookOpen className="w-4" />
+                        <span>
+                          {Array.isArray(course.modules)
+                            ? course.modules.length
+                            : 0}
+                        </span>
                       </div>
                     </div>
-
                     <CourseProgress
                       size="sm"
                       value={80}
                       variant={110 === 100 ? "success" : ""}
                     />
-
                     <div className="flex items-center justify-between mt-4">
                       <p className="text-md md:text-sm font-medium text-slate-700">
-                        {formatPrice(course?.price)}
+                        {formatPrice(course.price)}
                       </p>
-
                       <Button
                         variant="ghost"
                         className="text-xs text-sky-700 h-7 gap-1"
@@ -160,4 +170,5 @@ const HomePage = async () => {
     </>
   );
 };
+
 export default HomePage;

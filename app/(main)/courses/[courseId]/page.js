@@ -156,9 +156,6 @@ const SingleCoursePage = async ({ params: { courseId } }) => {
         </div>
       </section>
 
-      {/* Authors */}
-      {/* https://avatars.githubusercontent.com/u/1416832?v=4 */}
-      {/* https://avatars.githubusercontent.com/u/3633137?v=4 */}
     </>
   );
 };
